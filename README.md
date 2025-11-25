@@ -50,8 +50,8 @@ A Node.js/Express REST API for managing a book collection with CSV import functi
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd book-task
+git clone https://github.com/skwasifbhutto/book-management-api.git
+cd book-management-api
 ```
 
 2. Install dependencies:
@@ -163,7 +163,7 @@ To Kill a Mockingbird,Harper Lee,1960
 ## 📁 Project Structure
 
 ```
-book-task/
+book-management-api/
 ├── src/
 │   ├── index.ts                 # Application entry point
 │   ├── config/
@@ -183,9 +183,10 @@ book-task/
 ├── prisma/
 │   ├── schema.prisma            # Database schema
 │   └── migrations/              # Database migrations
-├── package.json
-├── tsconfig.json
 ├── jest.config.js
+├── package.json
+├── pnpm-lock.yaml
+├── tsconfig.json
 └── README.md
 ```
 
@@ -222,6 +223,74 @@ pnpm exec prisma migrate dev
 - CSV import validates data before inserting into the database
 - All API endpoints are protected with error handling
 - CORS is enabled for development purposes
+
+## 🔍 API Response Examples
+
+### Successful Book Retrieval
+```json
+{
+  "id": "507f1f77bcf86cd799439011",
+  "title": "The Great Gatsby",
+  "author": "F. Scott Fitzgerald",
+  "publishedYear": 1925,
+  "createdAt": "2025-11-25T10:30:00Z"
+}
+```
+
+### Error Response
+```json
+{
+  "error": "Book not found",
+  "statusCode": 404
+}
+```
+
+## 🚨 Error Handling
+
+The API includes comprehensive error handling for:
+- Invalid input validation (400)
+- Resource not found (404)
+- Server errors (500)
+- Validation errors with detailed messages
+
+## 🔐 Security Considerations
+
+- Environment variables are used for sensitive data (DATABASE_URL, API keys)
+- Input validation using Zod prevents malicious data
+- CORS configuration should be restricted in production
+- CSV file upload size limits are enforced
+
+## 🐛 Troubleshooting
+
+### Database Connection Issues
+- Verify `DATABASE_URL` in `.env` file
+- Ensure MongoDB instance is running
+- Check network connectivity to MongoDB cluster
+
+### CSV Import Fails
+- Ensure CSV headers match: `title`, `author`, `publishedYear`
+- Check file encoding (UTF-8 recommended)
+- Verify file size is within upload limits
+
+### Tests Fail
+- Run `pnpm exec prisma generate` to generate Prisma client
+- Clear Jest cache: `pnpm run test -- --clearCache`
+- Ensure MongoDB test database is accessible
+
+## 📚 Additional Resources
+
+- [Express.js Documentation](https://expressjs.com/)
+- [Prisma Documentation](https://www.prisma.io/docs/)
+- [MongoDB Documentation](https://docs.mongodb.com/)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Jest Testing Framework](https://jestjs.io/)
+
+## 🤝 Contributing
+
+1. Create a feature branch: `git checkout -b feature/your-feature`
+2. Commit changes: `git commit -m 'Add your feature'`
+3. Push to branch: `git push origin feature/your-feature`
+4. Open a Pull Request
 
 ## 📄 License
 
